@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة دار تحفيظ القرآن الكريم</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-mosque"></i>
+                    <h1>دار تحفيظ القرآن الكريم</h1>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <span class="stat-number" id="totalStudents">0</span>
+                            <span class="stat-label">طالب</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-tasks"></i>
+                        <div>
+                            <span class="stat-number" id="totalTasks">0</span>
+                            <span class="stat-label">واجب</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="students">
+                <i class="fas fa-user-graduate"></i>
+                إدارة الطلاب
+            </button>
+            <button class="tab-btn" data-tab="assignments">
+                <i class="fas fa-book-quran"></i>
+                الواجبات
+            </button>
+            <button class="tab-btn" data-tab="reports">
+                <i class="fas fa-chart-line"></i>
+                التقارير
+            </button>
+        </nav>
+
+        <!-- Students Tab -->
+        <div class="tab-content active" id="students-tab">
+            <div class="section-header">
+                <h2><i class="fas fa-user-plus"></i> تسجيل طالب جديد</h2>
+            </div>
+            
+            <form class="form-card" id="studentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="studentName">اسم الطالب</label>
+                        <input type="text" id="studentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="studentAge">العمر</label>
+                        <input type="number" id="studentAge" min="5" max="80" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="parentName">اسم ولي الأمر</label>
+                        <input type="text" id="parentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentPhone">رقم هاتف ولي الأمر</label>
+                        <input type="tel" id="parentPhone" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="currentLevel">المستوى الحالي</label>
+                        <select id="currentLevel" required>
+                            <option value="">اختر المستوى</option>
+                            <option value="مبتدئ">مبتدئ</option>
+                            <option value="متوسط">متوسط</option>
+                            <option value="متقدم">متقدم</option>
+                            <option value="حافظ">حافظ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="joinDate">تاريخ الانضمام</label>
+                        <input type="date" id="joinDate" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    تسجيل الطالب
+                </button>
+            </form>
+
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> قائمة الطلاب</h2>
+                <button class="btn btn-secondary" onclick="printStudentsList()">
+                    <i class="fas fa-print"></i>
+                    طباعة القائمة
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="studentsTable">
+                    <thead>
+                        <tr>
+                            <th>الكود الأكاديمي</th>
+                            <th>اسم الطالب</th>
+                            <th>العمر</th>
+                            <th>ولي الأمر</th>
+                            <th>رقم الهاتف</th>
+                            <th>المستوى</th>
+                            <th>تاريخ الانضمام</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Assignments Tab -->
+        <div class="tab-content" id="assignments-tab">
+            <div class="section-header">
+                <h2><i class="fas fa-plus-circle"></i> إضافة واجب جديد</h2>
+            </div>
+            
+            <form class="form-card" id="assignmentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="studentSelect">اختر الطالب</label>
+                        <select id="studentSelect" required>
+                            <option value="">اختر طالب</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="assignmentType">نوع الواجب</label>
+                        <select id="assignmentType" required>
+                            <option value="">اختر النوع</option>
+                            <option value="سورة">سورة كاملة</option>
+                            <option value="آيات">آيات محددة</option>
+                            <option value="أوجه">أوجه</option>
+                            <option value="مراجعة">مراجعة</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="assignmentContent">محتوى الواجب</label>
+                        <textarea id="assignmentContent" rows="3" placeholder="مثال: سورة البقرة من الآية 1 إلى 20" required></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dueDate">تاريخ التسليم</label>
+                        <input type="date" id="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="weeklyDays">أيام الحفظ الأسبوعية</label>
+                        <input type="number" id="weeklyDays" min="1" max="7" value="3" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="estimatedDuration">المدة المقدرة (بالأيام)</label>
+                        <input type="number" id="estimatedDuration" min="1" value="7" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">الأولوية</label>
+                        <select id="priority" required>
+                            <option value="عادي">عادي</option>
+                            <option value="مهم">مهم</option>
+                            <option value="عاجل">عاجل</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    إضافة الواجب
+                </button>
+            </form>
+
+            <div class="section-header">
+                <h2><i class="fas fa-tasks"></i> قائمة الواجبات</h2>
+                <button class="btn btn-secondary" onclick="printAssignmentsList()">
+                    <i class="fas fa-print"></i>
+                    طباعة القائمة
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="assignmentsTable">
+                    <thead>
+                        <tr>
+                            <th>رقم الواجب</th>
+                            <th>اسم الطالب</th>
+                            <th>نوع الواجب</th>
+                            <th>المحتوى</th>
+                            <th>تاريخ التسليم</th>
+                            <th>أيام الحفظ</th>
+                            <th>المدة المقدرة</th>
+                            <th>الأولوية</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assignmentsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div class="tab-content" id="reports-tab">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-line"></i> تقارير الإحصائيات</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stats-content">
+                        <h3 id="reportTotalStudents">0</h3>
+                        <p>إجمالي الطلاب</p>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stats-content">
+                        <h3 id="reportTotalAssignments">0</h3>
+                        <p>إجمالي الواجبات</p>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stats-content">
+                        <h3 id="reportCompletedAssignments">0</h3>
+                        <p>الواجبات المكتملة</p>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-content">
+                        <h3 id="reportPendingAssignments">0</h3>
+                        <p>الواجبات المعلقة</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2><i class="fas fa-trophy"></i> الطلاب المتميزون</h2>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table" id="topStudentsTable">
+                    <thead>
+                        <tr>
+                            <th>الترتيب</th>
+                            <th>اسم الطالب</th>
+                            <th>الواجبات المكتملة</th>
+                            <th>نسبة الإنجاز</th>
+                            <th>المستوى</th>
+                        </tr>
+                    </thead>
+                    <tbody id="topStudentsTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-header">
+                <h2><i class="fas fa-download"></i> إدارة البيانات</h2>
+            </div>
+
+            <div class="data-management">
+                <button class="btn btn-primary" onclick="exportData()">
+                    <i class="fas fa-download"></i>
+                    تصدير البيانات
+                </button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-upload"></i>
+                    استيراد البيانات
+                </button>
+                <button class="btn btn-danger" onclick="clearAllData()">
+                    <i class="fas fa-trash"></i>
+                    مسح جميع البيانات
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="notification" class="notification">
+        <span id="notificationMessage"></span>
+        <button onclick="hideNotification()">×</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
