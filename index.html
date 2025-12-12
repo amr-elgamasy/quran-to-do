@@ -102,14 +102,21 @@
                     <i class="fas fa-user-plus"></i>
                     تسجيل الطالب
                 </button>
+                <button type="button" class="btn btn-secondary" onclick="resetStudentForm()" style="display: none;" id="cancelEditStudent">
+                    <i class="fas fa-times"></i>
+                    إلغاء التعديل
+                </button>
             </form>
 
             <div class="section-header">
                 <h2><i class="fas fa-users"></i> قائمة الطلاب</h2>
-                <button class="btn btn-secondary" onclick="printStudentsList()">
-                    <i class="fas fa-print"></i>
-                    طباعة القائمة
-                </button>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="searchStudents" placeholder="بحت في الطلاب..." style="padding: 8px 15px; border: 2px solid #ecf0f1; border-radius: 8px; min-width: 250px;" onkeyup="searchStudents()">
+                    <button class="btn btn-secondary" onclick="printStudentsList()">
+                        <i class="fas fa-print"></i>
+                        طباعة القائمة
+                    </button>
+                </div>
             </div>
 
             <div class="table-container">
@@ -195,14 +202,27 @@
                     <i class="fas fa-plus"></i>
                     إضافة الواجب
                 </button>
+                <button type="button" class="btn btn-secondary" onclick="resetAssignmentForm()" style="display: none;" id="cancelEditAssignment">
+                    <i class="fas fa-times"></i>
+                    إلغاء التعديل
+                </button>
             </form>
 
             <div class="section-header">
                 <h2><i class="fas fa-tasks"></i> قائمة الواجبات</h2>
-                <button class="btn btn-secondary" onclick="printAssignmentsList()">
-                    <i class="fas fa-print"></i>
-                    طباعة القائمة
-                </button>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <select id="filterStatus" onchange="filterAssignments()" style="padding: 8px 15px; border: 2px solid #ecf0f1; border-radius: 8px;">
+                        <option value="all">جميع الحالات</option>
+                        <option value="معلق">معلق</option>
+                        <option value="مكتمل">مكتمل</option>
+                        <option value="متأخر">متأخر</option>
+                    </select>
+                    <input type="text" id="searchAssignments" placeholder="بحث في الواجبات..." style="padding: 8px 15px; border: 2px solid #ecf0f1; border-radius: 8px; min-width: 250px;" onkeyup="filterAssignments()">
+                    <button class="btn btn-secondary" onclick="printAssignmentsList()">
+                        <i class="fas fa-print"></i>
+                        طباعة القائمة
+                    </button>
+                </div>
             </div>
 
             <div class="table-container">
@@ -308,6 +328,10 @@
                 <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">
                     <i class="fas fa-upload"></i>
                     استيراد البيانات
+                </button>
+                <button class="btn btn-warning" onclick="restoreFromBackup()">
+                    <i class="fas fa-history"></i>
+                    استعادة نسخة احتياطية
                 </button>
                 <button class="btn btn-danger" onclick="clearAllData()">
                     <i class="fas fa-trash"></i>
